@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  app:
+    image: node:15.7.0-alpine
+    working_dir: /usr/src
+    command: >
+      sh -c "yarn &&
+             yarn start"
+    user: "1000"
+    volumes:
+      - ./:/usr/src
+
+  nginx:
+    image: nginx:1.19.6-alpine
+    working_dir: /etc/nginx
+    volumes:
+      - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./.docker/logs/nginx:/var/log/nginx
+      - ./build:/usr/share/nginx/app
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - app

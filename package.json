@@ -1,0 +1,18 @@
+{
+  "name": "esbuild-react-docker-template",
+  "version": "1.0.0",
+  "main": "src/app.jsx",
+  "scripts": {
+    "docker": "docker-compose up -d",
+    "init": "mkdir -p build && rm -rf build/* && cp public/* build/",
+    "start": "npm run init && esbuild src/app.jsx --bundle --sourcemap --watch --define:process.env.NODE_ENV=\\\"development\\\" --outdir=build",
+    "build": "npm run init && esbuild src/app.jsx --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\" --outdir=build"
+  },
+  "author": "Alexey Khrushch <alexeykhr@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.8.39",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
