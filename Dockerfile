@@ -1,6 +1,9 @@
-# NODE section
 ARG DOCKER_NODE_VERSION=15.7.0-alpine
-FROM node:$DOCKER_NODE_VERSION AS prepare
+ARG DOCKER_NGINX_VERSION=1.19.6-alpine
+
+
+# NODE section
+FROM node:$DOCKER_NODE_VERSION AS build-stage
 
 WORKDIR /usr/src
 
@@ -12,13 +15,12 @@ RUN yarn build
 
 
 # NGINX section
-ARG DOCKER_NGINX_VERSION=1.19.6-alpine
-FROM nginx:$DOCKER_NGINX_VERSION AS build
+FROM nginx:$DOCKER_NGINX_VERSION AS export-stage
 
 WORKDIR /usr/share/nginx/app
 
 COPY ./.docker/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./.docker/nginx/conf.d /etc/nginx/conf.d
-COPY --from=0 /usr/src/build /usr/share/nginx/app
+COPY --from=build-stage /usr/src/build /usr/share/nginx/app
 
 EXPOSE 80 443
