@@ -1,6 +1,6 @@
 # Esbuild React Docker Template
 
-Template for a quick setup of docker containers with React + esbuild.
+Template for a quick setup of docker containers with **React + esbuild**.
 
 ## Commands
 
@@ -20,7 +20,7 @@ Complete! Open [http://app.localhost/](http://app.localhost/).
 
 ### Production
 
-Using the `Dockerfile`.
+Using the `Dockerfile` file.
 
 ```shell
 # Build image
